@@ -24,7 +24,7 @@ async def start_command(bot, message):
         print(f"Error in /start command: {e}")
         await message.reply_text("❍ ᴇʀʀᴏʀ: Unable to process the command.")
 
-@app.on_message(filters.private & ~filters.group)
+@app.on_message(filters.text & ~filters.group)
 async def handle_private_query(client, message):
     # Get the message text
     query = message.text
