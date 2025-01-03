@@ -90,7 +90,6 @@ async def handle_messages(bot, message):
 
 
 from pyrogram import Client, filters
-from pyrogram.types import ChatAction
 import requests
 
 @app.on_message(filters.text)
@@ -103,7 +102,7 @@ async def venom(client, message):
         return
 
     # Send typing action to indicate bot is working
-    await client.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
+    await client.send_chat_action(chat_id=message.chat.id, action="typing")
 
     # Use the API to get response
     api_url = f"https://chatwithai.codesearch.workers.dev/?chat={query}"
@@ -118,6 +117,7 @@ async def venom(client, message):
 
     # Reply to the user
     await message.reply_text(reply)
+
 
 
 if __name__ == "__main__":
