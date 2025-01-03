@@ -24,8 +24,8 @@ async def start_command(bot, message):
         print(f"Error in /start command: {e}")
         await message.reply_text("❍ ᴇʀʀᴏʀ: Unable to process the command.")
 
-@app.on_message(filters.text & ~filters.edited)
-async def venom(client, message):
+@app.on_message(filters.private & ~filters.group)
+async def handle_private_query(client, message):
     # Get the message text
     query = message.text
 
