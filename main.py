@@ -89,6 +89,36 @@ async def handle_messages(bot, message):
         await message.reply_text(f"❍ ᴇʀʀᴏʀ: {e}")
 
 
+from pyrogram import Client, filters
+from pyrogram.types import ChatAction
+import requests
+
+@app.on_message(filters.text)
+async def venom(client, message):
+    # Get the message text
+    query = message.text
+
+    if not query:
+        await message.reply_text("I didn't receive any text to process.")
+        return
+
+    # Send typing action to indicate bot is working
+    await client.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
+
+    # Use the API to get response
+    api_url = f"https://chatwithai.codesearch.workers.dev/?chat={query}"
+    try:
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            reply = response.text.strip()  # Process API response
+        else:
+            reply = "Failed to fetch data from the API. Please try again later."
+    except Exception as e:
+        reply = f"An error occurred: {e}"
+
+    # Reply to the user
+    await message.reply_text(reply)
+
 
 if __name__ == "__main__":
     print("Bot is running...")
